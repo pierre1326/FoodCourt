@@ -327,11 +327,48 @@ app.post("/resetPassword", function(req, res) {
 });
 
 app.post("/createAdmin", function(req, res) {
-  
+  if(req.body.user == undefined || req.body.user.length == 0 || req.body.password == undefined || req.body.password.length == 0) {
+    var error = {error : "Data incompleted"};
+    res.send(error);
+  }
+  else {
+    var query = {user : req.body.user};
+    var admins = models['Admins'];
+    admins.findOne(query, function(err, result) {
+      if(err) {
+        var error = {error : "Error with database"};
+        res.send(error);
+      }
+      if(result != null) {
+        var status = {status : "Admin is already exists""};
+        res.send(status);
+      }
+      else {
+        var admin = admins.create({
+          user : req.body.user,
+          password : req.body.password
+        });
+        admin.save(function(err, resp) {
+          if(err) {
+            var error = {error : "Error with database"};
+            res.send(error);
+          }
+          else {
+            var status = {status : "Admin created"};
+            res.send(status);
+          }
+        });
+      }
+    });
+  }
 });
 
-app.post("/loginAdmin", function(req, res) {
+app.get("/", function(req, res) {
+  res.render("index.ejs");
+});
 
+app.post("/home", function(req, res) {
+  
 });
 
 function checkToken(email, login, actualToken, callback) {
