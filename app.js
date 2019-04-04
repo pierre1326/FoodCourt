@@ -340,7 +340,7 @@ app.post("/createAdmin", function(req, res) {
         res.send(error);
       }
       if(result != null) {
-        var status = {status : "Admin is already exists""};
+        var status = {status : "Admin is already exists"};
         res.send(status);
       }
       else {
@@ -364,11 +364,11 @@ app.post("/createAdmin", function(req, res) {
 });
 
 app.get("/", function(req, res) {
-  res.render("index.ejs");
+  res.render("index");
 });
 
 app.post("/home", function(req, res) {
-  
+
 });
 
 function checkToken(email, login, actualToken, callback) {
