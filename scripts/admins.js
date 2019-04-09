@@ -1,6 +1,6 @@
 module.exports = {
 
-  createAdmin : function(req, callback) {
+  createAdmin : function(req, models, callback) {
     if(req.body.user == undefined || req.body.user.length == 0 || req.body.password == undefined || req.body.password.length == 0) {
       var error = {error : "Data incompleted"};
       callback(error);
@@ -37,7 +37,7 @@ module.exports = {
     }
   },
 
-  loginAdmin : function(req, res) {
+  loginAdmin : function(req, models, callback) {
     if(req.body.user == undefined || req.body.user.length == 0 || req.body.password == undefined || req.body.password.length == 0) {
       var error = {error : "Data incompleted"};
       callback(error);

@@ -6,20 +6,20 @@ var fs = require('fs');
 var multer  = require('multer');
 var upload = multer({dest : 'images/'});
 
-module.exports = function(app, models, values, managerToken) {
+module.exports = function(app) {
 
   //Backend
 
   app.post("/createUser", function(req, res) {
     users.createUser(req, function(result) {
       res.send(result);
-    })
+    });
   });
 
   app.post("/updateName", function(req, res) {
-    users.updateName(req, managerToken, function(result) {
+    users.updateName(req, function(result) {
       res.send(result);
-    })
+    });
   });
 
   app.post("/loginUser", function(req, res) {
@@ -43,25 +43,25 @@ module.exports = function(app, models, values, managerToken) {
   app.post("/requestCode", function(req, res) {
     users.requestCode(req, function(result) {
       res.send(result);
-    })
+    });
   });
 
   app.post("/resetPassword", function(req, res) {
     users.resetPassword(req, function(result) {
       res.send(result);
-    })
+    });
   });
 
   app.post("/createAdmin", function(req, res) {
     admins.createAdmin(req, function(result) {
       res.send(result);
-    })
+    });
   });
 
   app.post("/loginAdmin", function(req, res) {
     admins.loginAdmin(req, function(result) {
       res.send(result);
-    })
+    });
   });
 
   //Backoffice

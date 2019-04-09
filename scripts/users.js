@@ -65,7 +65,7 @@ module.exports = {
     }
   },
 
-  updateName : function(req, managerToken, callback) {
+  updateName : function(req, callback) {
     if(req.body.email == undefined || req.body.email.length == 0 || req.body.token == undefined || req.body.token.length == 0) {
       var error = {error : "All the information is necessary"};
       callback(error);
@@ -120,7 +120,7 @@ module.exports = {
           callback(error);
         }
         else if(req.body.socialLogin) {
-          checkToken(req.body.email, true, null, function(token) {
+          managerToken.checkToken(req.body.email, true, null, function(token) {
             if(token == null) {
               var error = {error : "It is not possible to generate the token"};
               callback(error);
@@ -157,7 +157,7 @@ module.exports = {
           callback(status);
         }
         else if(result['password'] == req.body.password) {
-          checkToken(req.body.email, true, null, function(token) {
+          managerToken.checkToken(req.body.email, true, null, function(token) {
             if(token == null) {
               var error = {error : "It is not possible to generate the token"};
               callback(error);

@@ -3,9 +3,11 @@ var express = require("express");
 var app = express();
 var bodyParser = require("body-parser");
 var mongoose = require("mongoose");
-var models = require('./constants/schemas')(mongoose);
-var values = require('./constants/values');
-var managerToken = require('./scripts/token.js');
+
+//Global variables
+models = require('./constants/schemas')(mongoose);
+values = require('./constants/values');
+managerToken = require('./scripts/token.js');
 
 //Configuration
 app.use(bodyParser.json());
@@ -24,7 +26,7 @@ mongoose.connect(values['mongoURI'], {useNewUrlParser : true}, function(err) {
 });
 
 //Routes
-require('./routes/routes.js')(app, models, values, managerToken);
+require('./routes/routes.js')(app);
 
 //Init server
 app.listen(values['port'], function() {
