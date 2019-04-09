@@ -1,5 +1,6 @@
 var uidGenerator = require('uid-generator');
 var nodemailer = require('nodemailer');
+var fs = require('fs');
 
 module.exports = {
 
@@ -60,40 +61,6 @@ module.exports = {
               }
             });
           }
-        }
-      });
-    }
-  },
-
-  updateName : function(req, callback) {
-    if(req.body.email == undefined || req.body.email.length == 0 || req.body.token == undefined || req.body.token.length == 0) {
-      var error = {error : "All the information is necessary"};
-      callback(error);
-    }
-    else {
-      managerToken.checkToken(req.body.email, false, req.body.token, function(token) {
-        if(token == null) {
-          var error = {error : "It is not possible to generate the token"};
-          callback(error);
-        }
-        else if(token == -1) {
-          var status = {status : "Invalid token"};
-          callback(status);
-        }
-        else {
-          var values = {};
-          if(req.body.name != undefined && req.body.name.length > 0) values['name'] = req.body.name;
-          var users = models['Users'];
-          users.updateOne({email : req.body.email}, {$set : values}, function(err, user) {
-            if(err) {
-              var error = {error : "Update the user in the database is not possible"};
-              callback(error);
-            }
-            else {
-              var status = {status : "The user's account was updated", token : token};
-              callback(status);
-            }
-          });
         }
       });
     }
@@ -164,13 +131,106 @@ module.exports = {
             }
             else {
               var status = {token : token, name : result['name'], photo : result['photo'], contentType : result['contentType']};
-                callback(status);
+              callback(status);
             }
           });
         }
         else {
           var status = {status : "Incorrect password"};
           callback(status);
+        }
+      });
+    }
+  },
+
+  updateName : function(req, callback) {
+    if(req.body.email == undefined || req.body.email.length == 0 || req.body.token == undefined || req.body.token.length == 0) {
+      var error = {error : "All the information is necessary"};
+      callback(error);
+    }
+    else {
+      managerToken.checkToken(req.body.email, false, req.body.token, function(token) {
+        if(token == null) {
+          var error = {error : "It is not possible to generate the token"};
+          callback(error);
+        }
+        else if(token == -1) {
+          var status = {status : "Invalid token"};
+          callback(status);
+        }
+        else {
+          var values = {};
+          if(req.body.name != undefined && req.body.name.length > 0) values['name'] = req.body.name;
+          var users = models['Users'];
+          users.updateOne({email : req.body.email}, {$set : values}, function(err, user) {
+            if(err) {
+              var error = {error : "Update the user in the database is not possible"};
+              callback(error);
+            }
+            else {
+              var status = {status : "The user's account was updated", token : token};
+              callback(status);
+            }
+          });
+        }
+      });
+    }
+  },
+
+  updatePhoto : function(req, callback) {
+    if(req.file == undefined) {
+      var error = {error : "A file is necessary"};
+      callback(error);
+    }
+    else if(req.body.contentType == undefined || req.body.contentType.length == 0 || req.body.email == undefined || req.body.email.length == 0 || req.body.token == undefined || req.body.token.length == 0) {
+      var error = {error : "Data is not completed"};
+      callback(error);
+    }
+    else {
+      managerToken.checkToken(req.body.email, false, req.body.token, function(token) {
+        if(token == null) {
+          var error = {error : "It is not possible to generate the token"};
+          callback(error);
+        }
+        else if(token == -1) {
+          var status = {status : "Invalid token"};
+          callback(status);
+        }
+        else {
+          var query = {email : req.body.email};
+          var users = models['Users'];
+          users.findOne(query, function(err, result) {
+            if(err) {
+              var error = {error : "Error with database"};
+              callback(error);
+            }
+            else if(result == null) {
+              var error = {error : "The user doesn't exists"};
+              callback(error);
+            }
+            else {
+              var users = models['Users'];
+              var values = {contentType : req.body.contentType, photo : fs.readFileSync(req.file.path)};
+              users.updateOne({email : req.body.email}, {$set : values}, function(err, user) {
+                if(err) {
+                  var error = {error : "Update the user in the database is not possible"};
+                  callback(error);
+                }
+                else {
+                  fs.unlink(req.file.path, function(err) {
+                    if(err) {
+                      var error = {error : "The server could not take the imgen"};
+                      callback(error);
+                    }
+                    else {
+                      var status = {status : "The user's account was updated", token : token};
+                      callback(status);
+                    }
+                  });
+                }
+              });
+            }
+          });
         }
       });
     }

@@ -2,13 +2,13 @@
 var users = require('../scripts/users');
 var admins = require('../scripts/admins');
 
-var fs = require('fs');
+//Upload files
 var multer  = require('multer');
 var upload = multer({dest : 'images/'});
 
 module.exports = function(app) {
 
-  //Backend
+  //User Module
 
   app.post("/createUser", function(req, res) {
     users.createUser(req, function(result) {
@@ -29,15 +29,9 @@ module.exports = function(app) {
   });
 
   app.post("/updatePhoto", upload.single('avatar'), async function(req, res) {
-    try {
-      console.log(req.file);
-      var response = {status : "Received"};
-      res.send(response);
-    }
-    catch(err) {
-      var response = {status : "Error"};
-      res.send(response);
-    }
+    users.updatePhoto(req, function(result) {
+      res.send(result);
+    });
   });
 
   app.post("/requestCode", function(req, res) {
@@ -52,6 +46,8 @@ module.exports = function(app) {
     });
   });
 
+  //Admin module
+
   app.post("/createAdmin", function(req, res) {
     admins.createAdmin(req, function(result) {
       res.send(result);
@@ -62,6 +58,12 @@ module.exports = function(app) {
     admins.loginAdmin(req, function(result) {
       res.send(result);
     });
+  });
+
+  //Restaurants module
+
+  app.post("/createRestaurant", function(req, res) {
+    
   });
 
   //Backoffice
