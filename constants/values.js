@@ -5,5 +5,6 @@ module.exports = {
   pass : "profesoR1",
   service :"gmail",
   expirationLogin : 30,
-  expirationCode : 5
+  expirationCode : 5,
+  factor : 111.045
 }
