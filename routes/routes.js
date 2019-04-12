@@ -1,12 +1,22 @@
 //Functions
 var users = require('../scripts/users');
 var admins = require('../scripts/admins');
+var foods = require('../scripts/foods');
+var restaurants = require('../scripts/restaurants');
 
 //Upload files
 var multer  = require('multer');
 var upload = multer({dest : 'images/'});
 
 module.exports = function(app) {
+
+  //Foods Module
+
+  app.post("/getFoods", function(req, res) {
+    foods.getFoods(req, function(result) {
+      res.send(result);
+    });
+  });
 
   //User Module
 
@@ -63,7 +73,9 @@ module.exports = function(app) {
   //Restaurants module
 
   app.post("/createRestaurant", function(req, res) {
-    
+    restaurants.createRestaurant(function(result) {
+      res.send(result);
+    });
   });
 
   //Backoffice

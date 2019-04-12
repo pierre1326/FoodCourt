@@ -3,7 +3,7 @@ var util = require('./util.js');
 module.exports = {
 
   createRestaurant : function(req, callback) {
-
+    
   },
 
   updateRestaurant : function(req, callback) {

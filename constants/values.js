@@ -6,5 +6,6 @@ module.exports = {
   service :"gmail",
   expirationLogin : 30,
   expirationCode : 5,
-  factor : 111.045
+  factor : 111.045,
+  foods : ["Comida Rapida", "Marisqueria", "Bar", "Pasteleria", "Cafeteria", "Heladeria"]
 }

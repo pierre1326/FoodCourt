@@ -25,6 +25,25 @@ mongoose.connect(values['mongoURI'], {useNewUrlParser : true}, function(err) {
   }
 });
 
+//Add foods
+var foods = models['Foods'];
+foods.deleteMany({}, function(err) {
+  if(err) {
+    console.log('Error deleting foods');
+  }
+  else {
+    var array = values['foods'];
+    for(i in array) {
+      var food = new foods({type : array[i]});
+      food.save(function(err, resp) {
+        if(err) {
+          console.log('Error adding: ' + array[i]);
+        }
+      });
+    }
+  }
+});
+
 //Routes
 require('./routes/routes.js')(app);
 
