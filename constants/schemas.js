@@ -34,11 +34,13 @@ module.exports = function(mongoose) {
     price : Number,
     date : Date,
     comment : String,
-    user : ObjectId
+    user : String
   });
   var Restaurant = new Schema({
     name : String,
     number : Number,
+    calification : Number,
+    price : Number,
     webPage : String,
     foods : [String],
     opinions : [ObjectId],

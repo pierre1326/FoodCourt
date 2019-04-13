@@ -8,6 +8,9 @@ var restaurants = require('../scripts/restaurants');
 var multer  = require('multer');
 var upload = multer({dest : 'images/'});
 
+//Clean files
+var cleaner = require('../scripts/cleaner').startCleaner();
+
 module.exports = function(app) {
 
   //Foods Module
@@ -73,10 +76,46 @@ module.exports = function(app) {
   //Restaurants module
 
   app.post("/createRestaurant", function(req, res) {
-    restaurants.createRestaurant(function(result) {
+    restaurants.createRestaurant(req, function(result) {
       res.send(result);
     });
   });
+
+  app.post("/updateRestaurant", function(req, res) {
+    restaurants.updateRestaurant(req, function(result) {
+      res.send(result);
+    });
+  });
+
+  app.post("/createOpinion", function(req, res) {
+    restaurants.createOpinion(req, function(result) {
+      res.send(result);
+    });
+  });
+
+  app.post("/getOpinions", function(req, res) {
+    restaurants.getOpinions(req, function(result) {
+      res.send(result);
+    });
+  });
+
+  app.post("/addPhoto",  upload.array('photos', 5), function(req, res) {
+    restaurants.addPhoto(req, function(result) {
+      res.send(result);
+    });
+  });
+
+  app.post("/getPhotos", function(req, res) {
+    restaurants.getPhotos(req, function(result) {
+      res.send(result);
+    });
+  });
+
+  app.post("/getRestaurants", function(req, res) {
+    restaurants.getRestaurants(req, function(result) {
+      res.send(result);
+    })
+  })
 
   //Backoffice
 

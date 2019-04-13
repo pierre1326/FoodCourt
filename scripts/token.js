@@ -63,4 +63,4 @@ function createToken(email, callback) {
   });
 }
 
-module.exports = { checkToken,createToken };
+module.exports = { checkToken, createToken };
