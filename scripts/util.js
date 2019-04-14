@@ -48,6 +48,61 @@ function checkOpinion(opinion) {
 }
 
 function checkRestaurant(restaurant, filters) {
+  if(filters.price != undefined) {
+    if(restaurant.price < filters.price.min || restaurant.price > filters.price.max) {
+      return false;
+    }
+  }
+  if(filters.calification != undefined) {
+    if(restaurant.calification < filters.calification.min || restaurant.calification > filters.calification.max) {
+      return false;
+    }
+  }
+  if(filters.ubication != undefined) {
+    var totalDistance = distance(restaurant.address.lat, restaurant.address.long, filters.ubication.lat, filters.ubication.long);
+    var kmDistance = convert(totalDistance);
+    if(kmDistance > filters.ubication.distance) {
+      return false;
+    }
+  }
+  if(filters.foods != undefined) {
+    for(i in filters.foods) {
+      var flag = true;
+      var food = filters.foods[i];
+      if(restaurant.foods.includes(food)) {
+        flag = false;
+      }
+      if(flag) {
+        return false;
+      }
+    }
+  }
+  return true;
+}
+
+function checkFilters(filters) {
+  if(filters.price != undefined) {
+    if((typeof filters.price.min !== "number") || (typeof filters.price.max !== "number")) {
+      return false;
+    }
+  }
+  if(filters.calification != undefined) {
+    if((typeof filters.calification.min !== "number") || (typeof filters.price.max !== "number")) {
+      return false;
+    }
+  }
+  if(filters.ubication != undefined) {
+    if((typeof filters.ubication.lat !== "number") || (typeof filters.ubication.long !== "number") || (typeof filters.ubication.distance !== "number")) {
+      return false;
+    }
+  }
+  if(filters.foods != undefined) {
+    for(i in filters.foods) {
+      if(typeof filters.foods[i] !== "string") {
+        return false;
+      }
+    }
+  }
   return true;
 }
 
@@ -95,4 +150,4 @@ function updateRestaurant(restaurant, callback) {
   });
 }
 
-module.exports = { distance, convert, checkArray, checkSchedules, checkOpinion, checkRestaurant, updateRestaurant };
+module.exports = { distance, convert, checkArray, checkSchedules, checkOpinion, checkRestaurant, updateRestaurant, checkFilters };

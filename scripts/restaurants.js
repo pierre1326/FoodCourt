@@ -317,8 +317,8 @@ module.exports = {
       var error = {error : "Token and emails is necessary"};
       callback(error);
     }
-    if(req.body.filters == undefined) {
-      var error = {error : "Filters are necessary"};
+    if(req.body.filters == undefined || !util.checkFilters(req.body.filters)) {
+      var error = {error : "Error with filters"};
       callback(error);
     }
     else {
@@ -332,7 +332,25 @@ module.exports = {
           callback(status);
         }
         else {
-          
+          var restaurants = models['Restaurants'];
+          var fields = {name : 1, webPage : 1, number : 1, calification : 1, price : 1, foods: 1, address : 1, schedules : 1};
+          restaurants.find({}, fields).exec(function(err, values) {
+            if(err) {
+              var error = {error : "Error with database"};
+              callback(error);
+            }
+            else {
+              var array = [];
+              for(i in values) {
+                var restaurant = values[i];
+                if(util.checkRestaurant(restaurant, req.body.filters)) {
+                  array.push(restaurant);
+                }
+              }
+              var status = {token : token, restaurants : array};
+              callback(status);
+            }
+          });
         }
       });
     }

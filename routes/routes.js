@@ -114,8 +114,8 @@ module.exports = function(app) {
   app.post("/getRestaurants", function(req, res) {
     restaurants.getRestaurants(req, function(result) {
       res.send(result);
-    })
-  })
+    });
+  });
 
   //Backoffice
 
