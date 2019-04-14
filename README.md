@@ -12,7 +12,7 @@ En caso de que el servidor falle y no sea problema directa de la solicitud reali
   "error" : "Mensaje de error"  
 }
 
-Para esto, no se recibira token de regreso y se debe avisar puesto que el servidor podria estar caido
+Para esto, no se recibira token de regreso y se debe avisar puesto que el servidor podria estar caido. Otra situacion puede ser que se envie un JSON con formato incorrecto pero el servidor no se caiga sino que por el contrario capture el error, en ese caso recibira un JSON con solo la key "status" con un mensaje indicando el problema.
 
 ## Usuarios  
 
@@ -142,100 +142,146 @@ Para esto, no se recibira token de regreso y se debe avisar puesto que el servid
   
 ## Restaurantes
 
-- Crear Restaurantes:  
+  *Para los horarios, el array debe tener un tamaño exacto de 7 y cada dia debe tener el formato indicado*  
+
+- Crear Restaurantes: "/createRestaurant"
 
   Envio:
 
-  {
-  
+  {  
+    "token" : "Token del usuario,  
+    "email" : "Email del usuario",  
+    "name" : "Nombre del restaurante",  
+    "address" : {"lat" : Punto, "long" : Punto, "direction" : "Descripcion de la ubicacion"},  
+    *Opcional* "number" : Numero de telefono,  
+    *Opcional* "webPage" : "Pagina Web",  
+    *Opcional* "foods" : Array de Comidas,  
+    *Opcional* "schedules" : [{day : String, open: Date, close: Date}]  
   }  
   
   Respuesta:
   
   {
-  
+    "token" : "Token de respuesta",  
+    "status" : "Mensaje segun lo sucedido"  
   }
   
-- Actualizar Restaurante:  
+- Actualizar Restaurante: "/updateRestaurant"
 
   Envio:
 
-  {
-  
+  {  
+    "token" : "Token del usuario,  
+    "email" : "Email del usuario",  
+    "id" : "Id del restaurante",  
+    *Opcional* "name" : "Nuevo nombre del restaurante",  
+    *Opcional* "number" : Numero de telefono,  
+    *Opcional* "webPage" : "Pagina Web",  
+    *Opcional* "foods" : Array de Comidas,  
+    *Opcional* "schedules" : [{day : String, open: Date, close: Date}]  
   }  
   
   Respuesta:
   
   {
-  
+    "token" : "Token de respuesta",  
+    "status" : "Mensaje segun lo sucedido"  
   }
   
-- Crear Opinion:  
+- Crear Opinion: "/createOpinion" 
 
   Envio:
 
-  {
-  
+  {  
+    "token" : "Token del usuario",  
+    "email" : "Email del usuario",  
+    "id" : "Id del restaurante",  
+    "opinion" : {"calification" : Numero, "price" : Numero, "date" : Fecha, *Opcional* "comment" : "Comentario del usuario"}  
   }  
   
   Respuesta:
   
-  {
-  
+  {  
+    "token" : "Token de respuesta",  
+    "status" : "Mensaje segun lo sucedido"  
   }
   
-- Obtener opiniones:  
+- Obtener opiniones: "/getOpinions"  
 
   Envio:
 
-  {
-  
+  {  
+    "token" : "Token del usuario",  
+    "email" : "Email del usuario",  
+    "id" : "Id del restaurante"  
   }  
   
   Respuesta:
   
-  {
-  
+  {  
+    "token" : "Token de respuesta",  
+    "opinions" : Array de opiniones  
   }
   
-- Añadir fotos:  
+- Añadir fotos: "/addPhoto"  
+
+  *Recordar que varios archivos se pueden asociar a una llave("photos") simultaneamente, si no el servidor no obtendra las imagenes*  
 
   Envio:
 
-  {
-  
+  {  
+    "token" : "Token del usuario",  
+    "email" : "Email del usuario",  
+    "id" : "Id del restaurante",  
+    "photos" : Imagenes del restaurante (Maximo 5)  
   }  
   
   Respuesta:
   
-  {
-  
+  {  
+    "token" : "Token de respuesta",  
+    "status" : "Mensaje segun lo sucedido"  
   }
   
-- Obtener fotos:
+- Obtener fotos: "/getPhotos"
 
   Envio:
 
-  {
-  
+  {  
+    "token" : "Token del usuario",  
+    "email" : "Email del usuario",  
+    "id" : "Id del restaurante"  
   }  
   
   Respuesta:
   
-  {
-  
+  {  
+    "token" : "Token de respuesta",  
+    "photos" : Array con la informacion binaria de cada foto  
   }
   
-- Obtener restaurantes:  
+- Obtener restaurantes: "/getRestaurants"  
 
   Envio:
 
-  {
-  
+  {  
+    "token" : "Token del usuario",  
+    "email" : "Email del usuario",  
+    "filters" : Json con los Filtros (Se indica el formato mas adelante)  
   }  
+  
+  *Json con el formato de filtros*
+  
+  {  
+    *Opcional* "price" : {"min" : Number, "max" : Number},  
+    *Opcional* "calification" : {"min" : Number, "max" : Number},  
+    *Opcional* "ubication" : {"lat" : Number, "long" : Number, "distance" : Number},  
+    *Opcional* "foods" : Array de comidas permitidas  
+  }
   
   Respuesta:
   
-  {
-  
+  {  
+    "token" : "Token de respuesta",  
+    "restaurants" : Array con restaurantes  
   }
