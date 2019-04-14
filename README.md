@@ -8,8 +8,8 @@ La ruta utilizada es la siguiente: [https://foodcourtec.herokuapp.com/](https://
 
 En caso de que el servidor falle y no sea problema directa de la solicitud realizada, recibira un JSON con el siguiente formato:
 
-{
-  "error" : "Mensaje de error"
+{  
+  "error" : "Mensaje de error"  
 }
 
 Para esto, no se recibira token de regreso y se debe avisar puesto que el servidor podria estar caido
@@ -20,37 +20,37 @@ Para esto, no se recibira token de regreso y se debe avisar puesto que el servid
 
   Envio:
 
-  {
-    "email" : "Email del usuario",
-    "name" : "Nombre del usuario",
-    "password" : "Password del usuario"
+  {  
+    "email" : "Email del usuario",    
+    "name" : "Nombre del usuario",    
+    "password" : "Password del usuario"  
   }  
   
   Respuesta:
   
-  {
-    "status" : "Mensaje segun lo sucedido"
+  {  
+    "status" : "Mensaje segun lo sucedido"  
   }
   
 - Inicio de Sesion: "/loginUser"
 
   Envio:
 
-  {
-    "email" : "Email del usuario",
-    "password" : "Password del usuario",
-    "socialLogin" : Boolean si el usuario ingresa con Faceboook
+  {  
+    "email" : "Email del usuario",  
+    "password" : "Password del usuario",  
+    "socialLogin" : Boolean si el usuario ingresa con Faceboook  
   }  
   
   En este caso, si se inicia sesion con Facebook, la key "password" no es necesaria, igual en caso contrario
   
   Respuesta:
   
-  {
-    "token" : "Token para proximas solicitudes",
-    "name" : "Nombre del usuario",
-    "photo" : Informacion binaria de la foto,
-    "contentType" : "Formato de la foto"
+  {  
+    "token" : "Token para proximas solicitudes",  
+    "name" : "Nombre del usuario",  
+    "photo" : Informacion binaria de la foto,  
+    "contentType" : "Formato de la foto"  
   }
   
   Si el inicio de sesion es por Facebook se recibira unicamente el Token como respuesta
@@ -59,14 +59,14 @@ Para esto, no se recibira token de regreso y se debe avisar puesto que el servid
 
   Envio:
 
-  {
-    "email" : "Email del usuario"
+  {  
+    "email" : "Email del usuario"  
   }  
   
   Respuesta:
   
-  { 
-    "status" : "Mensaje segun lo sucedido"
+  {  
+    "status" : "Mensaje segun lo sucedido"  
   }
   
   Recordar que se envia un correo al email brindado con el codigo para cambiar la contraseña
@@ -75,51 +75,51 @@ Para esto, no se recibira token de regreso y se debe avisar puesto que el servid
 
   Envio:
 
-  {
-    "email" : "Email del usuario",
-    "password" : "Password nueva",
-    "code" " "Codigo enviado al correo"
+  {  
+    "email" : "Email del usuario",  
+    "password" : "Password nueva",  
+    "code" " "Codigo enviado al correo"  
   }  
   
   Respuesta:
   
-  {
-    "status" : "Mensaje segun lo sucedido"
+  {  
+    "status" : "Mensaje segun lo sucedido"  
   }
   
 - Actualizar Nombre: "/updateName"
 
   Envio:
 
-  {
-    "email" : "Email del usuario",
-    "token" : "Token obtenido en el inicio de sesion u otras solicitudes",
-    "name" : "Nuevo nombre del usuario"
+  {  
+    "email" : "Email del usuario",  
+    "token" : "Token obtenido en el inicio de sesion u otras solicitudes",  
+    "name" : "Nuevo nombre del usuario"  
   }  
   
   Respuesta:
   
-  {
-    "token" : "Token de respuesta",
-    "status" : "Mensaje segun lo sucedido"
+  {  
+    "token" : "Token de respuesta",  
+    "status" : "Mensaje segun lo sucedido"  
   }
   
-- Actualizar Foto: "/updatePhoto"
+- Actualizar Foto: "/updatePhoto"  
 
   Envio:
 
-  {
-    "token" : "Token del usuario",
-    "email" : "Email del usuario",
-    "contentType" : "Formato de la imagen",
-    "avatar" : Imagen a colocar
+  {  
+    "token" : "Token del usuario",  
+    "email" : "Email del usuario",  
+    "contentType" : "Formato de la imagen",  
+    "avatar" : Imagen a colocar  
   }  
   
   Respuesta:
   
-  {
-    "token" : "Nuevo token",
-    "status" : "Mensaje segun lo sucedido"
+  {  
+    "token" : "Nuevo token",  
+    "status" : "Mensaje segun lo sucedido"  
   }
   
 ## Comidas
@@ -128,16 +128,16 @@ Para esto, no se recibira token de regreso y se debe avisar puesto que el servid
 
   Envio:
 
-  {
-    "token" : "Token del usuario",
-    "email" : "Email del usuario"
+  {  
+    "token" : "Token del usuario",  
+    "email" : "Email del usuario"  
   }  
   
   Respuesta:
   
-  {
-    "token" : "Token de respuesta",
-    "foods" : Comidas
+  {  
+    "token" : "Token de respuesta",  
+    "foods" : Comidas  
   }
   
 ## Restaurantes
