@@ -14,8 +14,8 @@ La ruta utilizada es la siguiente: [https://foodcourtec.herokuapp.com/](https://
 
 - En caso de que el servidor siga en pie y el problema venga del Token o el formato del JSON se recibira un JSON como el siguiente:
 
-{
-  "status" : "Mensaje de fallo en la informacion"
+{  
+  "status" : "Mensaje de fallo en la informacion"  
 }
 
 Para ningun caso se recibira token de regreso y se debe avisar puesto que el servidor podria estar caido. 
