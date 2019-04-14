@@ -6,13 +6,19 @@ La ruta utilizada es la siguiente: [https://foodcourtec.herokuapp.com/](https://
 
 *Nota*
 
-En caso de que el servidor falle y no sea problema directa de la solicitud realizada, recibira un JSON con el siguiente formato:
+- En caso de que el servidor falle y no sea problema directa de la solicitud realizada, recibira un JSON con el siguiente formato:
 
 {  
   "error" : "Mensaje de error"  
 }
 
-Para esto, no se recibira token de regreso y se debe avisar puesto que el servidor podria estar caido. Otra situacion puede ser que se envie un JSON con formato incorrecto pero el servidor no se caiga sino que por el contrario capture el error, en ese caso recibira un JSON con solo la key "status" con un mensaje indicando el problema.
+- En caso de que el servidor siga en pie y el problema venga del Token o el formato del JSON se recibira un JSON como el siguiente:
+
+{
+  "status" : "Mensaje de fallo en la informacion"
+}
+
+Para ningun caso se recibira token de regreso y se debe avisar puesto que el servidor podria estar caido. 
 
 ## Usuarios  
 
@@ -161,7 +167,7 @@ Para esto, no se recibira token de regreso y se debe avisar puesto que el servid
   
   Respuesta:
   
-  {
+  {  
     "token" : "Token de respuesta",  
     "status" : "Mensaje segun lo sucedido"  
   }
@@ -183,7 +189,7 @@ Para esto, no se recibira token de regreso y se debe avisar puesto que el servid
   
   Respuesta:
   
-  {
+  {  
     "token" : "Token de respuesta",  
     "status" : "Mensaje segun lo sucedido"  
   }
