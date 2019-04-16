@@ -6,14 +6,14 @@ module.exports = {
 
   createUser : function(req, callback) {
     if(req.body.email == undefined || req.body.email.length == 0 || req.body.name == undefined || req.body.name.length == 0 || req.body.password == undefined || req.body.password.length == 0) {
-      var error = {error : "Data error"};
+      var error = {status : "Data error"};
       callback(error);
     }
     else {
       var users = models['Users'];
       users.findOne({email : req.body.email}, function(err, result) {
         if(err) {
-          var error = {error : "Error with database"};
+          var error = {status : "Error with database"};
           callback(error);
         }
         else if(result == null) {
@@ -28,7 +28,7 @@ module.exports = {
           });
           user.save(function(err, resp) {
             if(err) {
-              var error = {error : "Save the user in database is not possible"};
+              var error = {status : "Save the user in database is not possible"};
               callback(error);
             }
             else {
@@ -52,7 +52,7 @@ module.exports = {
             };
             users.updateOne({email : req.body.email}, {$set : values}, function(err, user) {
               if(err) {
-                var error = {error : "Update the user in the database is not possible"};
+                var error = {status : "Update the user in the database is not possible"};
                 callback(status);
               }
               else {
@@ -68,28 +68,28 @@ module.exports = {
 
   loginUser : function(req, callback) {
     if(req.body.email == undefined || req.body.email.length == 0) {
-      var error = {error : "Email is necessary"};
+      var error = {status : "Email is necessary"};
       callback(error);
     }
     else if(req.body.password != undefined && req.body.socialLogin != undefined || req.body.password == undefined && req.body.socialLogin == undefined) {
-      var error = {error : "A unique login method is necessary"};
+      var error = {status : "A unique login method is necessary"};
       callback(error);
     }
     else if(req.body.password != undefined && req.body.password.length == 0) {
-      var error = {error : "Valid password is require"};
+      var error = {status : "Valid password is require"};
       callback(error);
     }
     else {
       var users = models['Users'];
       users.findOne({email : req.body.email}, function(err, result) {
         if(err) {
-          var error = {error : "Error with database"};
+          var error = {status : "Error with database"};
           callback(error);
         }
         else if(req.body.socialLogin) {
           managerToken.checkToken(req.body.email, true, null, function(token) {
             if(token == null) {
-              var error = {error : "It is not possible to generate the token"};
+              var error = {status : "It is not possible to generate the token"};
               callback(error);
             }
             if(result == null) {
@@ -104,7 +104,7 @@ module.exports = {
               });
               user.save(function(err, resp) {
                 if(err) {
-                  var error = {error : "Save the user in database is not possible"};
+                  var error = {status : "Save the user in database is not possible"};
                   callback(error);
                 }
                 else {
@@ -126,7 +126,7 @@ module.exports = {
         else if(result['password'] == req.body.password) {
           managerToken.checkToken(req.body.email, true, null, function(token) {
             if(token == null) {
-              var error = {error : "It is not possible to generate the token"};
+              var error = {status : "It is not possible to generate the token"};
               callback(error);
             }
             else {
@@ -145,13 +145,13 @@ module.exports = {
 
   updateName : function(req, callback) {
     if(req.body.email == undefined || req.body.email.length == 0 || req.body.token == undefined || req.body.token.length == 0) {
-      var error = {error : "All the information is necessary"};
+      var error = {status : "All the information is necessary"};
       callback(error);
     }
     else {
       managerToken.checkToken(req.body.email, false, req.body.token, function(token) {
         if(token == null) {
-          var error = {error : "It is not possible to generate the token"};
+          var error = {status : "It is not possible to generate the token"};
           callback(error);
         }
         else if(token == -1) {
@@ -164,7 +164,7 @@ module.exports = {
           var users = models['Users'];
           users.updateOne({email : req.body.email}, {$set : values}, function(err, user) {
             if(err) {
-              var error = {error : "Update the user in the database is not possible"};
+              var error = {status : "Update the user in the database is not possible"};
               callback(error);
             }
             else {
@@ -179,17 +179,17 @@ module.exports = {
 
   updatePhoto : function(req, callback) {
     if(req.file == undefined) {
-      var error = {error : "A file is necessary"};
+      var error = {status : "A file is necessary"};
       callback(error);
     }
     else if(req.body.contentType == undefined || req.body.contentType.length == 0 || req.body.email == undefined || req.body.email.length == 0 || req.body.token == undefined || req.body.token.length == 0) {
-      var error = {error : "Data is not completed"};
+      var error = {status : "Data is not completed"};
       callback(error);
     }
     else {
       managerToken.checkToken(req.body.email, false, req.body.token, function(token) {
         if(token == null) {
-          var error = {error : "It is not possible to generate the token"};
+          var error = {status : "It is not possible to generate the token"};
           callback(error);
         }
         else if(token == -1) {
@@ -201,11 +201,11 @@ module.exports = {
           var users = models['Users'];
           users.findOne(query, function(err, result) {
             if(err) {
-              var error = {error : "Error with database"};
+              var error = {status : "Error with database"};
               callback(error);
             }
             else if(result == null) {
-              var error = {error : "The user doesn't exists"};
+              var error = {status : "The user doesn't exists"};
               callback(error);
             }
             else {
@@ -213,13 +213,13 @@ module.exports = {
               var values = {contentType : req.body.contentType, photo : fs.readFileSync(req.file.path)};
               users.updateOne({email : req.body.email}, {$set : values}, function(err, user) {
                 if(err) {
-                  var error = {error : "Update the user in the database is not possible"};
+                  var error = {status : "Update the user in the database is not possible"};
                   callback(error);
                 }
                 else {
                   fs.unlink(req.file.path, function(err) {
                     if(err) {
-                      var error = {error : "The server could not take the imgen"};
+                      var error = {status : "The server could not take the imgen"};
                       callback(error);
                     }
                     else {
@@ -238,7 +238,7 @@ module.exports = {
 
   requestCode : function(req, callback) {
     if(req.body.email == undefined || req.body.email.length == 0) {
-      var error = {error : "Email is Invalid"};
+      var error = {status : "Email is Invalid"};
       callback(error);
     }
     else {
@@ -246,11 +246,11 @@ module.exports = {
       var users = models['Users'];
       users.findOne(query, function(err, result) {
         if(err) {
-          var error = {error : "Error with database"};
+          var error = {status : "Error with database"};
           callback(error);
         }
         if(result == null) {
-          var error = {error : "The user doesn't exists"};
+          var error = {status : "The user doesn't exists"};
           callback(error);
         }
         else if(result['commonLogin']){
@@ -259,7 +259,7 @@ module.exports = {
           var codes = models['Codes'];
           codes.deleteOne(query, function(err, result) {
             if(err) {
-              var error = {error : "Error with database"};
+              var error = {status : "Error with database"};
               callback(error);
             }
             else {
@@ -271,7 +271,7 @@ module.exports = {
               });
               code.save(function(err, response) {
                 if(err) {
-                  var error = {error : "It is not possible to generate the code"};
+                  var error = {status : "It is not possible to generate the code"};
                   callback(error);
                 }
                 else {
@@ -290,7 +290,7 @@ module.exports = {
                   };
                   transporter.sendMail(mailOptions, function(error, info){
                     if (error) {
-                      var error = {error : "Error when sending mail"};
+                      var error = {status : "Error when sending mail"};
                       callback(error);
                     } else {
                       var status = {status : "Email sent"};
@@ -303,7 +303,7 @@ module.exports = {
           });
         }
         else {
-          var error = {error : "A valid account is required"};
+          var error = {status : "A valid account is required"};
           res.send(error);
         }
       });
@@ -312,7 +312,7 @@ module.exports = {
 
   resetPassword : function(req, callback) {
     if(req.body.email == undefined || req.body.email.length == 0 || req.body.password == undefined || req.body.password.length == 0 || req.body.code == undefined || req.body.code.length != 4) {
-      var error = {error : "Information not valid"};
+      var error = {status : "Information not valid"};
       callback(error);
     }
     else {
@@ -320,7 +320,7 @@ module.exports = {
       var query = {email : req.body.email};
       codes.findOne(query, function(err, result) {
         if(err) {
-          var error = {error : "Error with database"};
+          var error = {status : "Error with database"};
           callback(error);
         }
         else if(result == null) {
@@ -330,7 +330,7 @@ module.exports = {
         else if(result['code'] == req.body.code) {
           codes.deleteOne(query, function(err, resp) {
             if(err) {
-              var error = {error : "Error with database"};
+              var error = {status : "Error with database"};
               callback(error);
             }
             else {
@@ -344,7 +344,7 @@ module.exports = {
                 var users = models['Users'];
                 users.updateOne(query, {$set : values}, function(err, user) {
                   if(err) {
-                    var error = {error : "Update the user in the database is not possible"};
+                    var error = {status : "Update the user in the database is not possible"};
                     callback(error);
                   }
                   else {

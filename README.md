@@ -4,21 +4,7 @@ En este documento se explicara como hacer uso del backend realizado para la apli
 
 La ruta utilizada es la siguiente: [https://foodcourtec.herokuapp.com/](https://foodcourtec.herokuapp.com/)  
 
-*Nota*
-
-- En caso de que el servidor falle y no sea problema directa de la solicitud realizada, recibira un JSON con el siguiente formato:
-
-{  
-  "error" : "Mensaje de error"  
-}
-
-- En caso de que el servidor siga en pie y el problema venga del Token o el formato del JSON se recibira un JSON como el siguiente:
-
-{  
-  "status" : "Mensaje de fallo en la informacion"  
-}
-
-Para ningun caso se recibira token de regreso y se debe avisar puesto que el servidor podria estar caido. 
+Para ningun caso se recibira token de regreso y se debe avisar puesto que el servidor podria estar caido.
 
 ## Usuarios  
 
@@ -31,13 +17,13 @@ Para ningun caso se recibira token de regreso y se debe avisar puesto que el ser
     "name" : "Nombre del usuario",    
     "password" : "Password del usuario"  
   }  
-  
+
   Respuesta:
-  
+
   {  
     "status" : "Mensaje segun lo sucedido"  
   }
-  
+
 - Inicio de Sesion: "/loginUser"
 
   Envio:
@@ -47,20 +33,20 @@ Para ningun caso se recibira token de regreso y se debe avisar puesto que el ser
     "password" : "Password del usuario",  
     "socialLogin" : Boolean si el usuario ingresa con Faceboook  
   }  
-  
+
   En este caso, si se inicia sesion con Facebook, la key "password" no es necesaria, igual en caso contrario
-  
+
   Respuesta:
-  
+
   {  
     "token" : "Token para proximas solicitudes",  
     "name" : "Nombre del usuario",  
     "photo" : Informacion binaria de la foto,  
     "contentType" : "Formato de la foto"  
   }
-  
+
   Si el inicio de sesion es por Facebook se recibira unicamente el Token como respuesta
-  
+
 - Obtener codigo: "/requestCode"
 
   Envio:
@@ -68,15 +54,15 @@ Para ningun caso se recibira token de regreso y se debe avisar puesto que el ser
   {  
     "email" : "Email del usuario"  
   }  
-  
+
   Respuesta:
-  
+
   {  
     "status" : "Mensaje segun lo sucedido"  
   }
-  
+
   Recordar que se envia un correo al email brindado con el codigo para cambiar la contraseña
-  
+
 - Recuperar contraseña: "/resetPassword"
 
   Envio:
@@ -86,13 +72,13 @@ Para ningun caso se recibira token de regreso y se debe avisar puesto que el ser
     "password" : "Password nueva",  
     "code" " "Codigo enviado al correo"  
   }  
-  
+
   Respuesta:
-  
+
   {  
     "status" : "Mensaje segun lo sucedido"  
   }
-  
+
 - Actualizar Nombre: "/updateName"
 
   Envio:
@@ -102,14 +88,14 @@ Para ningun caso se recibira token de regreso y se debe avisar puesto que el ser
     "token" : "Token obtenido en el inicio de sesion u otras solicitudes",  
     "name" : "Nuevo nombre del usuario"  
   }  
-  
+
   Respuesta:
-  
+
   {  
     "token" : "Token de respuesta",  
     "status" : "Mensaje segun lo sucedido"  
   }
-  
+
 - Actualizar Foto: "/updatePhoto"  
 
   Envio:
@@ -120,14 +106,14 @@ Para ningun caso se recibira token de regreso y se debe avisar puesto que el ser
     "contentType" : "Formato de la imagen",  
     "avatar" : Imagen a colocar  
   }  
-  
+
   Respuesta:
-  
+
   {  
     "token" : "Nuevo token",  
     "status" : "Mensaje segun lo sucedido"  
   }
-  
+
 ## Comidas
 
 - Obtener comidas: "/getFoods"
@@ -138,14 +124,14 @@ Para ningun caso se recibira token de regreso y se debe avisar puesto que el ser
     "token" : "Token del usuario",  
     "email" : "Email del usuario"  
   }  
-  
+
   Respuesta:
-  
+
   {  
     "token" : "Token de respuesta",  
     "foods" : Comidas  
   }
-  
+
 ## Restaurantes
 
   *Para los horarios, el array debe tener un tamaño exacto de 7 y cada dia debe tener el formato indicado*  
@@ -164,14 +150,14 @@ Para ningun caso se recibira token de regreso y se debe avisar puesto que el ser
     *Opcional* "foods" : Array de Comidas,  
     *Opcional* "schedules" : [{day : String, open: Date, close: Date}]  
   }  
-  
+
   Respuesta:
-  
+
   {  
     "token" : "Token de respuesta",  
     "status" : "Mensaje segun lo sucedido"  
   }
-  
+
 - Actualizar Restaurante: "/updateRestaurant"
 
   Envio:
@@ -186,15 +172,15 @@ Para ningun caso se recibira token de regreso y se debe avisar puesto que el ser
     *Opcional* "foods" : Array de Comidas,  
     *Opcional* "schedules" : [{day : String, open: Date, close: Date}]  
   }  
-  
+
   Respuesta:
-  
+
   {  
     "token" : "Token de respuesta",  
     "status" : "Mensaje segun lo sucedido"  
   }
-  
-- Crear Opinion: "/createOpinion" 
+
+- Crear Opinion: "/createOpinion"
 
   Envio:
 
@@ -204,14 +190,14 @@ Para ningun caso se recibira token de regreso y se debe avisar puesto que el ser
     "id" : "Id del restaurante",  
     "opinion" : {"calification" : Numero, "price" : Numero, "date" : Fecha, *Opcional* "comment" : "Comentario del usuario"}  
   }  
-  
+
   Respuesta:
-  
+
   {  
     "token" : "Token de respuesta",  
     "status" : "Mensaje segun lo sucedido"  
   }
-  
+
 - Obtener opiniones: "/getOpinions"  
 
   Envio:
@@ -221,14 +207,14 @@ Para ningun caso se recibira token de regreso y se debe avisar puesto que el ser
     "email" : "Email del usuario",  
     "id" : "Id del restaurante"  
   }  
-  
+
   Respuesta:
-  
+
   {  
     "token" : "Token de respuesta",  
     "opinions" : Array de opiniones  
   }
-  
+
 - Añadir fotos: "/addPhoto"  
 
   *Recordar que varios archivos se pueden asociar a una llave("photos") simultaneamente, si no el servidor no obtendra las imagenes*  
@@ -241,14 +227,14 @@ Para ningun caso se recibira token de regreso y se debe avisar puesto que el ser
     "id" : "Id del restaurante",  
     "photos" : Imagenes del restaurante (Maximo 5)  
   }  
-  
+
   Respuesta:
-  
+
   {  
     "token" : "Token de respuesta",  
     "status" : "Mensaje segun lo sucedido"  
   }
-  
+
 - Obtener fotos: "/getPhotos"
 
   Envio:
@@ -258,14 +244,14 @@ Para ningun caso se recibira token de regreso y se debe avisar puesto que el ser
     "email" : "Email del usuario",  
     "id" : "Id del restaurante"  
   }  
-  
+
   Respuesta:
-  
+
   {  
     "token" : "Token de respuesta",  
     "photos" : Array con la informacion binaria de cada foto  
   }
-  
+
 - Obtener restaurantes: "/getRestaurants"  
 
   Envio:
@@ -275,18 +261,18 @@ Para ningun caso se recibira token de regreso y se debe avisar puesto que el ser
     "email" : "Email del usuario",  
     "filters" : Json con los Filtros (Se indica el formato mas adelante)  
   }  
-  
+
   *Json con el formato de filtros*
-  
+
   {  
     *Opcional* "price" : {"min" : Number, "max" : Number},  
     *Opcional* "calification" : {"min" : Number, "max" : Number},  
     *Opcional* "ubication" : {"lat" : Number, "long" : Number, "distance" : Number},  
     *Opcional* "foods" : Array de comidas permitidas  
   }
-  
+
   Respuesta:
-  
+
   {  
     "token" : "Token de respuesta",  
     "restaurants" : Array con restaurantes  
