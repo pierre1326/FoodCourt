@@ -212,7 +212,8 @@ Para ningun caso se recibira token de regreso y se debe avisar puesto que el ser
 
   {  
     "token" : "Token de respuesta",  
-    "opinions" : Array de opiniones  
+    "opinions" : Array de opiniones,  
+    "status" : "Mensaje segun lo sucedido"  
   }
 
 - Añadir fotos: "/addPhoto"  
@@ -249,7 +250,8 @@ Para ningun caso se recibira token de regreso y se debe avisar puesto que el ser
 
   {  
     "token" : "Token de respuesta",  
-    "photos" : Array con la informacion binaria de cada foto  
+    "photos" : Array con la informacion binaria de cada foto,  
+    "status" : "Mensaje segun lo sucedido"    
   }
 
 - Obtener restaurantes: "/getRestaurants"  
@@ -275,5 +277,6 @@ Para ningun caso se recibira token de regreso y se debe avisar puesto que el ser
 
   {  
     "token" : "Token de respuesta",  
-    "restaurants" : Array con restaurantes  
+    "restaurants" : Array con restaurantes,  
+    "status" : "Mensaje segun lo sucedido"  
   }

@@ -5,34 +5,34 @@ module.exports = {
 
   createRestaurant : function(req, callback) {
     if(req.body.token == undefined || req.body.token.length == 0 || req.body.email == undefined || req.body.email.length == 0) {
-      var error = {error : "Token and emails is necessary"};
-      callback(error);
+      var status = {status : "Token and emails is necessary"};
+      callback(status);
     }
     else if(req.body.name == undefined || req.body.name.length == 0) {
-      var error = {error : "Restaurant name is necessary"};
-      callback(error);
+      var status = {status : "Restaurant name is necessary"};
+      callback(status);
     }
     else if(req.body.address == undefined || typeof req.body.address.lat != "number" || typeof req.body.address.long != "number" || typeof req.body.address.direction != "string") {
-      var error = {error : "Direction is necessary"};
-      callback(error);
+      var status = {status : "Direction is necessary"};
+      callback(status);
     }
     else {
       managerToken.checkToken(req.body.email, null, req.body.token, function(token) {
         if(token == null) {
-          var error = {error : "It is not possible to generate the token"};
-          callback(error);
+          var status = {status : "It is not possible to generate the token"};
+          callback(status);
         }
         else if(token == -1) {
           var status = {status : "Invalid token"};
           callback(status);
         }
         else if(req.body.foods != undefined && !util.checkArray(req.body.foods, "string")) {
-          var error = {error : "Format in foods is not valid"};
-          callback(error);
+          var status = {status : "Format in foods is not valid"};
+          callback(status);
         }
         else if(req.body.schedules != undefined && !util.checkSchedules(req.body.schedules)) {
-          var error = {error : "Format in schedules is not valid"};
-          callback(error);
+          var status = {status : "Format in schedules is not valid"};
+          callback(status);
         }
         else {
           var restaurants = models['Restaurants'];
@@ -50,8 +50,8 @@ module.exports = {
           });
           restaurant.save(function(err, resp) {
             if(err) {
-              var error = {error : "Error with database"};
-              callback(error);
+              var status = {status : "Error with database"};
+              callback(status);
             }
             else {
               var status = {token : token, status : "Restaurant added"};
@@ -65,18 +65,18 @@ module.exports = {
 
   updateRestaurant : function(req, callback) {
     if(req.body.token == undefined || req.body.token.length == 0 || req.body.email == undefined || req.body.email.length == 0) {
-      var error = {error : "Token and emails is necessary"};
-      callback(error);
+      var status = {status : "Token and emails is necessary"};
+      callback(status);
     }
     else if(req.body.id == undefined) {
-      var error = {error : "Restaurant ID is necessary"};
-      callback(error);
+      var status = {status : "Restaurant ID is necessary"};
+      callback(status);
     }
     else {
       managerToken.checkToken(req.body.email, null, req.body.token, function(token) {
         if(token == null) {
-          var error = {error : "It is not possible to generate the token"};
-          callback(error);
+          var status = {status : "It is not possible to generate the token"};
+          callback(status);
         }
         else if(token == -1) {
           var status = {status : "Invalid token"};
@@ -93,8 +93,8 @@ module.exports = {
           if(util.checkSchedules(req.body.schedules)) values['schedules'] = req.body.schedules;
           restaurants.updateOne(query, {$set : values}, function(err, restaurant) {
             if(err) {
-              var error = {error : "Error with database"};
-              callback(error);
+              var status = {status : "Error with database"};
+              callback(status);
             }
             else {
               var status = {status : "Restaurant's updated", token : token};
@@ -108,22 +108,22 @@ module.exports = {
 
   createOpinion : function(req, callback) {
     if(req.body.token == undefined || req.body.token.length == 0 || req.body.email == undefined || req.body.email.length == 0) {
-      var error = {error : "Token and emails is necessary"};
-      callback(error);
+      var status = {status : "Token and emails is necessary"};
+      callback(status);
     }
     else if(req.body.id == undefined || req.body.id.length == 0) {
-      var error = {error : "Restaurant ID is necessary"};
-      callback(error);
+      var status = {status : "Restaurant ID is necessary"};
+      callback(status);
     }
     else if(req.body.opinion == undefined) {
-      var error = {error : "Opinion is necessary"};
-      callback(error);
+      var status = {status : "Opinion is necessary"};
+      callback(status);
     }
     else {
       managerToken.checkToken(req.body.email, null, req.body.token, function(token) {
         if(token == null) {
-          var error = {error : "It is not possible to generate the token"};
-          callback(error);
+          var status = {status : "It is not possible to generate the token"};
+          callback(status);
         }
         else if(token == -1) {
           var status = {status : "Invalid token"};
@@ -139,18 +139,18 @@ module.exports = {
               comment : (req.body.opinion.comment != undefined) ? req.body.opinion.comment : null,
               user : req.body.email
             });
-            opinion.save(function(error, response) {
-              if(error) {
-                var error = {error : "Error with database"};
-                callback(error);
+            opinion.save(function(err, response) {
+              if(err) {
+                var status = {status : "Error with database"};
+                callback(status);
               }
               else {
                 var restaurants = models['Restaurants'];
                 var values = {opinions : response["_id"]};
                 restaurants.updateOne({"_id" : req.body.id}, {$push : values}, function(exc, restaurant) {
                   if(exc) {
-                    var error = {error : "Error with database"};
-                    callback(error);
+                    var status = {status : "Error with database"};
+                    callback(status);
                   }
                   else {
                     util.updateRestaurant(req.body.id, function(status) {
@@ -163,8 +163,8 @@ module.exports = {
             });
           }
           else {
-            var error = {error : "Data format in opinion is invalid"};
-            callback(error);
+            var status = {status : "Data format in opinion is invalid"};
+            callback(status);
           }
         }
       });
@@ -173,18 +173,18 @@ module.exports = {
 
   getOpinions : function(req, callback) {
     if(req.body.token == undefined || req.body.token.length == 0 || req.body.email == undefined || req.body.email.length == 0) {
-      var error = {error : "Token and emails is necessary"};
-      callback(error);
+      var status = {status : "Token and emails is necessary"};
+      callback(status);
     }
     else if(req.body.id == undefined || req.body.id.length == 0){
-      var error = {error : "Restaurant ID is necessary"};
-      callback(error);
+      var status = {status : "Restaurant ID is necessary"};
+      callback(status);
     }
     else {
       managerToken.checkToken(req.body.email, null, req.body.token, function(token) {
         if(token == null) {
-          var error = {error : "It is not possible to generate the token"};
-          callback(error);
+          var status = {status : "It is not possible to generate the token"};
+          callback(status);
         }
         else if(token == -1) {
           var status = {status : "Invalid token"};
@@ -195,8 +195,8 @@ module.exports = {
           var query = {'_id' : req.body.id};
           restaurants.findOne(query, function(err, result) {
             if(err) {
-              var error = {error : "Error with database"};
-              callback(error);
+              var status = {status : "Error with database"};
+              callback(status);
             }
             else {
               var array = result['opinions'];
@@ -205,11 +205,11 @@ module.exports = {
               var data = [];
               opinions.find({"_id" : array}).exec(function(err, values) {
                 if(err) {
-                  var error = {error : "Error with database"};
-                  callback(error);
+                  var status = {status : "Error with database"};
+                  callback(status);
                 }
                 else {
-                  var status = {token : token, opinions : values};
+                  var status = {token : token, opinions : values, status : "Successfull"};
                   callback(status);
                 }
               });
@@ -222,22 +222,22 @@ module.exports = {
 
   addPhoto : function(req, callback) {
     if(req.body.token == undefined || req.body.token.length == 0 || req.body.email == undefined || req.body.email.length == 0) {
-      var error = {error : "Token and emails is necessary"};
-      callback(error);
+      var status = {status : "Token and emails is necessary"};
+      callback(status);
     }
     else if(req.body.id == undefined || req.body.id.length == 0){
-      var error = {error : "Restaurant ID is necessary"};
-      callback(error);
+      var status = {status : "Restaurant ID is necessary"};
+      callback(status);
     }
     else if(req.files == undefined || req.files.length == 0) {
-      var error = {error : "At least one file is necessary"};
-      callback(error);
+      var status = {status : "At least one file is necessary"};
+      callback(status);
     }
     else {
       managerToken.checkToken(req.body.email, null, req.body.token, function(token) {
         if(token == null) {
-          var error = {error : "It is not possible to generate the token"};
-          callback(error);
+          var status = {status : "It is not possible to generate the token"};
+          callback(status);
         }
         else if(token == -1) {
           var status = {status : "Invalid token"};
@@ -255,14 +255,14 @@ module.exports = {
           var values = {photos : photos};
           restaurants.updateOne(query, {$push : values}, function(err, restaurant) {
             if(err) {
-              var error = {error : "Update the restaurant in the database is not possible"};
-              callback(error);
+              var status = {status : "Update the restaurant in the database is not possible"};
+              callback(status);
             }
             else {
               for(i in req.files) {
                 var photo = req.files[i];
-                fs.unlink(photo.path, function(err) {
-                  if(err) {
+                fs.unlink(photo.path, function(exc) {
+                  if(exc) {
                     console.log("Error deleted photo: " + i);
                   }
                 });
@@ -278,18 +278,18 @@ module.exports = {
 
   getPhotos : function(req, callback) {
     if(req.body.token == undefined || req.body.token.length == 0 || req.body.email == undefined || req.body.email.length == 0) {
-      var error = {error : "Token and emails is necessary"};
-      callback(error);
+      var status = {status : "Token and emails is necessary"};
+      callback(status);
     }
     else if(req.body.id == undefined || req.body.id.length == 0){
-      var error = {error : "Restaurant ID is necessary"};
-      callback(error);
+      var status = {status : "Restaurant ID is necessary"};
+      callback(status);
     }
     else {
       managerToken.checkToken(req.body.email, null, req.body.token, function(token) {
         if(token == null) {
-          var error = {error : "It is not possible to generate the token"};
-          callback(error);
+          var status = {status : "It is not possible to generate the token"};
+          callback(status);
         }
         else if(token == -1) {
           var status = {status : "Invalid token"};
@@ -299,11 +299,11 @@ module.exports = {
           var restaurants = models['Restaurants'];
           restaurants.findOne({"_id" : req.body.id}, function(err, result) {
             if(err) {
-              var error = {error : "Error with database"};
-              callback(error);
+              var status = {status : "Error with database"};
+              callback(status);
             }
             else {
-              var status = {token : token, photos : result['photos']};
+              var status = {token : token, photos : result['photos'], status : "Successfull"};
               callback(status);
             }
           });
@@ -314,18 +314,18 @@ module.exports = {
 
   getRestaurants : function(req, callback) {
     if(req.body.token == undefined || req.body.token.length == 0 || req.body.email == undefined || req.body.email.length == 0) {
-      var error = {error : "Token and emails is necessary"};
-      callback(error);
+      var status = {status : "Token and emails is necessary"};
+      callback(status);
     }
     if(req.body.filters == undefined || !util.checkFilters(req.body.filters)) {
-      var error = {error : "Error with filters"};
-      callback(error);
+      var status = {status : "Error with filters"};
+      callback(status);
     }
     else {
       managerToken.checkToken(req.body.email, null, req.body.token, function(token) {
         if(token == null) {
-          var error = {error : "It is not possible to generate the token"};
-          callback(error);
+          var status = {status : "It is not possible to generate the token"};
+          callback(status);
         }
         else if(token == -1) {
           var status = {status : "Invalid token"};
@@ -336,8 +336,8 @@ module.exports = {
           var fields = {name : 1, webPage : 1, number : 1, calification : 1, price : 1, foods: 1, address : 1, schedules : 1};
           restaurants.find({}, fields).exec(function(err, values) {
             if(err) {
-              var error = {error : "Error with database"};
-              callback(error);
+              var status = {status : "Error with database"};
+              callback(status);
             }
             else {
               var array = [];
@@ -347,7 +347,7 @@ module.exports = {
                   array.push(restaurant);
                 }
               }
-              var status = {token : token, restaurants : array};
+              var status = {token : token, restaurants : array, status : "Successfull"};
               callback(status);
             }
           });
