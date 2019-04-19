@@ -86,10 +86,10 @@ module.exports = function(app) {
     });
   });
 
-  app.post("changeRestaurant", function(req, res) {
+  app.post("/changeRestaurant", function(req, res) {
     sess = req.session;
     if(sess != undefined && sess.user) {
-      admins.changeRestaurant(req, function(result) {
+      admins.changeRestaurant(req.body.values, function(result) {
         res.send(result);
       });
     }

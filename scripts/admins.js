@@ -1,3 +1,5 @@
+var util = require('./util.js');
+
 module.exports = {
 
   createAdmin : function(req, callback) {
@@ -80,26 +82,27 @@ module.exports = {
   },
 
   changeRestaurant : function(req, callback) {
-    if(req.body.id == undefined || req.body.id.length == 0) {
+    if(req.id == undefined || req.id.length == 0) {
       var status = {status : "Restaurant ID is necessary"};
       callback(status);
     }
     else {
       var restaurants = models['Restaurants'];
-      var query = { "_id" : req.body.id };
+      var query = { "_id" : req.id };
       var values = {};
-      if(req.body.name != undefined && req.body.name.length > 0) values['name'] = req.body.name;
-      if(req.body.number != undefined) values['number'] = req.body.number;
-      if(req.body.webPage != undefined) values['webPage'] = req.body.webPage;
-      if(util.checkArray(req.body.foods, "string")) values['foods'] = req.body.foods;
-      if(util.checkSchedules(req.body.schedules)) values['schedules'] = req.body.schedules;
+      if(req.name != undefined && req.name.length > 0) values['name'] = req.name;
+      if(req.number != undefined) values['number'] = req.number;
+      if(req.webPage != undefined) values['webPage'] = req.webPage;
+      if(req.address != undefined) values['address'] = req.address;
+      if(util.checkArray(req.foods, "string")) values['foods'] = req.foods;
+      if(util.checkSchedules(req.schedules)) values['schedules'] = req.schedules;
       restaurants.updateOne(query, {$set : values}, function(err, restaurant) {
         if(err) {
-          var status = {status : "Error with database"};
+          var status = {status : "Error with database", code : -1};
           callback(status);
         }
         else {
-          var status = {status : "Restaurant's updated", token : token};
+          var status = {status : "Restaurant's updated", code : 1};
           callback(status);
         }
       });
