@@ -54,7 +54,7 @@ module.exports = {
               callback(status);
             }
             else {
-              var status = {token : token, status : "Restaurant added"};
+              var status = {token : token, status : "Restaurant added", id : resp["_id"]};
               callback(status);
             }
           });
@@ -354,6 +354,49 @@ module.exports = {
         }
       });
     }
+  },
+
+  deleteRestaurant : function(req, callback) {
+    if(req.body.id == undefined || req.body.id.length == 0) {
+      var status = {status : "ID is necessary", code : 0};
+      callback(status);
+    }
+    else {
+      var restaurants = models['Restaurants'];
+      restaurants.deleteOne({"_id" : req.body.id}, function(err, result) {
+        if(err) {
+          var status = {status : "Error with database", code : -1};
+          callback(status);
+        }
+        else {
+          var status = {status : "Restaurant eliminated", code : 1};
+          callback(status);
+        }
+      });
+    }
+  },
+
+  restaurantToString : function(restaurant) {
+    var result = "";
+    var newRestaurant = {};
+    newRestaurant.id = restaurant['_id'];
+    newRestaurant.name = restaurant['name'];
+    newRestaurant.number = restaurant['number'];
+    newRestaurant.calification = restaurant['calification'];
+    newRestaurant.price = restaurant['price'];
+    newRestaurant.webPage = restaurant['webPage'];
+    if(restaurant['foods'] != null) {
+      for (index = 0; index < restaurant['foods'].length; index++) {
+        result += restaurant['foods'][index] + '\n';
+      }
+    }
+    newRestaurant.foods = result;
+    newRestaurant.address = "Lat: " + restaurant.address.lat + "\n" + "Long: " + restaurant.address.long + "\n" + "Direccion: " + restaurant.address.direction + "\n";
+    newRestaurant.schedules = [];
+    if(restaurant['schedules'] != null) {
+      newRestaurant.schedules = restaurant.schedules;
+    }
+    return newRestaurant;
   }
 
 }

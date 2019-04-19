@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Restaurants</title>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="crossorigin="anonymous"></script>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" type="text/css" href="stylesheets/restaurants.css">
+
+  </head>
+  <body>
+    <h1>Gestion de Restaurantes</h1>
+    <div class="">
+      <table border="1">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Numero</th>
+            <th>Pagina Web</th>
+            <th>Calificacion</th>
+            <th>Precio</th>
+            <th>Comidas</th>
+            <th>Horarios</th>
+            <th>Direccion</th>
+            <th>Opciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% restaurants.forEach(function(restaurant){ %>
+            <tr>
+              <td><%= restaurant.name %></td>
+              <td><%= restaurant.number %></td>
+              <td><%= restaurant.webPage %></td>
+              <td><%= restaurant.calification %></td>
+              <td><%= restaurant.price %></td>
+              <td><%= restaurant.foods %></td>
+              <td>
+                <table border="1">
+                  <thead>
+                    <tr>
+                      <th>Dia</th>
+                      <th>Abre</th>
+                      <th>Cierra</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% restaurant.schedules.forEach(function(schedule){ %>
+                      <tr>
+                        <td><%= schedule.day %></td>
+                        <td><%= schedule.open.getHours() + ":" + schedule.open.getMinutes() + ":" + schedule.open.getSeconds() %></td>
+                        <td><%= schedule.close.getHours() + ":" + schedule.close.getMinutes() + ":" + schedule.close.getSeconds() %></td>
+                      </tr>
+                    <% }); %>
+                  </tbody>
+                </table>
+              </td>
+              <td><%= restaurant.address %></td>
+              <td>
+                <button data-value="<%= restaurant.id %>" type="button" name="button" onclick="deleteRestaurant(this)">Eliminar</button>
+                <button data-value="<%= restaurant.id %>" type="button" name="button" onclick="updateRestaurant(this)">Actualizar</button>
+              </td>
+            </tr>
+          <% }); %>
+        </tbody>
+      </table>
+      <button id="back" type="button" name="button">Regresar</button>
+    </div>
+
+    <script type="text/javascript" src="/scripts/restaurant.js"></script>
+
+  </body>
+
+</html>

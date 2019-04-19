@@ -3,6 +3,7 @@ var express = require("express");
 var app = express();
 var bodyParser = require("body-parser");
 var mongoose = require("mongoose");
+var session = require('express-session');
 
 //Global variables
 models = require('./constants/schemas')(mongoose);
@@ -10,6 +11,7 @@ values = require('./constants/values');
 managerToken = require('./scripts/token.js');
 
 //Configuration
+app.use(session({secret: 'ssshhhhh', saveUninitialized: true, resave: true}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended : true}));
 app.set("view engine", "ejs");

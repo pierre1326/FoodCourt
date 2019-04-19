@@ -5,17 +5,7 @@ $("#signUp").click(function(){
 	   async: false,
 	   data: {user:$("#user").val(), password:$("#password").val()},
 	   success: function(response) {
-       if("error" in response) {
-         alert(response['error']);
-       }
-       else if(response['code'] != 1) {
-         alert(response['status']);
-       }
-       else {
-         window.location.replace("/home");
-       }
-       $("#email").val("");
-       $("#password").val("");
+			 window.location.replace("/home");
 	   }
 	});
 });

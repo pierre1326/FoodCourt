@@ -1,0 +1,30 @@
+body {
+  margin-top: 2%;
+  margin-left: 1%;
+}
+
+h1, h2, h4 {
+  width: 30%;
+  padding-bottom: 10px;
+  border-bottom: 1px solid gray;
+}
+
+.align {
+  width : 15%;
+}
+
+.align > input {
+  float: right;
+}
+
+.schedules {
+  width : 40%;
+  padding: 15px;
+  border: 1px solid black;
+  margin-bottom: 1%;
+}
+
+button {
+  margin-top: 1%;
+  margin-bottom: 2%;
+}

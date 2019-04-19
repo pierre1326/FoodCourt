@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Actualizar Restaurante</title>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" type="text/css" href="/stylesheets/update.css">
+
+  </head>
+  <body>
+    <h1>Actualizar Restaurante</h1>
+    <form class="" action="/changeRestaurant" method="post">
+      <div class="align">
+        <label for="id">ID: </label>
+        <input id="id" type="text" name="id" value="<%= id %>" placeholder="Id del restaurante" required>
+      </div>
+      <h2>Informacion de Contacto</h2>
+      <div class="align">
+        <label for="name">Nombre: </label>
+        <input id="name" type="text" name="name" placeholder="Nombre del restaurante" required>
+      </div>
+      <div class="align">
+        <label for="webPage">Pagina Web: </label>
+        <input id="webPage" type="text" name="webPage" placeholder="Pagina Web" required>
+      </div>
+      <div class="align">
+        <label for="number">Numero: </label>
+        <input id="number" type="number" name="number" placeholder="Numero del restaurante" required>
+      </div>
+      <div class="ubication">
+        <h2>Ubicacion</h2>
+        <label for="lat">Lat: </label>
+        <input id="lat" type="number" name="lat" placeholder="Latitud" required>
+        <label for="long">Long: </label>
+        <input id="long" type="number" name="long" placeholder="Longitud" required>
+        <label for="direction">Direccion: </label>
+        <input id="direction" type="text" name="direction" placeholder="Direccion" required>
+      </div>
+      <div class="schedules">
+        <h2>Horario</h2>
+        <div class="">
+          <h5>Lunes</h5>
+          <label for="open1">Abre: </label>
+          <input id="open1" type="time" name="open1" placeholder="Horario de apertura" required>
+          <label for="close1">Cierra: </label>
+          <input id="close1" type="time" name="close1" placeholder="Horario de Cierre" required>
+        </div>
+        <div class="">
+          <h5>Martes</h5>
+          <label for="open2">Abre: </label>
+          <input id="open2" type="time" name="open2" placeholder="Horario de apertura" required>
+          <label for="close2">Cierra: </label>
+          <input id="close2" type="time" name="close2" placeholder="Horario de Cierre" required>
+        </div>
+        <div class="">
+          <h5>Miercoles</h5>
+          <label for="open3">Abre: </label>
+          <input id="open3" type="time" name="open3" placeholder="Horario de apertura" required>
+          <label for="close3">Cierra: </label>
+          <input id="close3" type="time" name="close3" placeholder="Horario de Cierre" required>
+        </div>
+        <div class="">
+          <h5>Jueves</h5>
+          <label for="open4">Abre: </label>
+          <input id="open4" type="time" name="open4" placeholder="Horario de apertura" required>
+          <label for="close4">Cierra: </label>
+          <input id="close4" type="time" name="close4" placeholder="Horario de Cierre" required>
+        </div>
+        <div class="">
+          <h5>Viernes</h5>
+          <label for="open5">Abre: </label>
+          <input id="open5" type="time" name="open5" placeholder="Horario de apertura" required>
+          <label for="close5">Cierra: </label>
+          <input id="close5" type="time" name="close5" placeholder="Horario de Cierre" required>
+        </div>
+        <div class="">
+          <h5>Sabado</h5>
+          <label for="open6">Abre: </label>
+          <input id="open6" type="time" name="open6" placeholder="Horario de apertura" required>
+          <label for="close6">Cierra: </label>
+          <input id="close6" type="time" name="close6" placeholder="Horario de Cierre" required>
+        </div>
+        <div class="">
+          <h5>Domingo</h5>
+          <label for="open7">Abre: </label>
+          <input id="open7" type="time" name="open7" placeholder="Horario de apertura" required>
+          <label for="close7">Cierra: </label>
+          <input id="close7" type="time" name="close7" placeholder="Horario de Cierre" required>
+        </div>
+      </div>
+      <div class="">
+        <input id="update" type="submit" name="submit" value="Actualizar">
+      </div>
+    </form>
+    <div class="">
+      <button id="back" type="button" name="button">Regresar</button>
+    </div>
+  </body>
+
+  <script type="text/javascript" src="/scripts/update.js"></script>
+
+</html>

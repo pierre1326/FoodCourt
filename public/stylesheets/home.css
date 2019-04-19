@@ -1,0 +1,14 @@
+body {
+  margin-top: 1%;
+  margin-left: 2%;
+}
+
+h1 {
+  margin-bottom: 20px;
+  border-bottom: 1px solid black;
+  width: 30%;
+}
+
+.buttons {
+  margin: auto;
+}

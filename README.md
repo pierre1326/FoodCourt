@@ -155,7 +155,8 @@ Para ningun caso se recibira token de regreso y se debe avisar puesto que el ser
 
   {  
     "token" : "Token de respuesta",  
-    "status" : "Mensaje segun lo sucedido"  
+    "status" : "Mensaje segun lo sucedido",  
+    "id" : "Id del restaurante"  
   }
 
 - Actualizar Restaurante: "/updateRestaurant"

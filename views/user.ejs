@@ -2,7 +2,7 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title>Administrador</title>
+    <title>Usuarios</title>
 
     <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="crossorigin="anonymous"></script>
 
@@ -11,18 +11,41 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 
-    <link rel="stylesheet" type="text/css" href="stylesheets/home.css">
+    <link rel="stylesheet" type="text/css" href="stylesheets/users.css">
 
   </head>
   <body>
-    <h1>BackOffice</h1>
-    <div class="buttons">
-      <button id="user" type="button" name="button">Usuarios</button>
-      <button id="restaurant" type="button" name="button">Restaurantes</button>
-      <button id="logout" type="button" name="button">Cerrar Sesion</button>
+    <h1>Usuarios</h1>
+    <div class="container">
+      <h2>Informacion de los usuarios</h2>
+      <table border="1">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Correo</th>
+            <th>Password</th>
+            <th>Facebook</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% users.forEach(function(user){ %>
+            <tr>
+              <td><%= user.name %></td>
+              <td><%= user.email %></td>
+              <td><%= user.password %></td>
+              <td><%= user.socialLogin %></td>
+            </tr>
+          <% }); %>
+        </tbody>
+      </table>
+      <button id="back" type="button" name="button">Regresar</button>
     </div>
-
-    <script type="text/javascript" src="/scripts/home.js"></script>
-
   </body>
+
+  <script type="text/javascript">
+    $("#back").click(function(){
+    	window.location.replace("/home");
+    });
+  </script>
+
 </html>
