@@ -15,7 +15,7 @@ module.exports = {
           var error = {error : "Error with database"};
           callback(error);
         }
-        if(result != null) {
+        else if(result != null) {
           var status = {status : "Admin is already exists"};
           callback(status);
         }

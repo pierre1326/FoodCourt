@@ -45,20 +45,22 @@ function createToken(email, callback) {
     if(err) {
       callback(null);
     }
-  });
-  var uidgen = new uidGenerator(uidGenerator.BASE58, 10);
-  var code = uidgen.generateSync();
-  var token = new tokens({
-    code : code,
-    expiration : currentDate.setMinutes( currentDate.getMinutes() + values['expirationLogin'] ),
-    email : email
-  });
-  token.save(function(err, resp) {
-    if(err) {
-      callback(null);
-    }
     else {
-      callback(code);
+      var uidgen = new uidGenerator(uidGenerator.BASE58, 10);
+      var code = uidgen.generateSync();
+      var token = new tokens({
+        code : code,
+        expiration : currentDate.setMinutes( currentDate.getMinutes() + values['expirationLogin'] ),
+        email : email
+      });
+      token.save(function(err, resp) {
+        if(err) {
+          callback(null);
+        }
+        else {
+          callback(code);
+        }
+      });
     }
   });
 }
