@@ -92,7 +92,7 @@ module.exports = {
               var error = {status : "It is not possible to generate the token"};
               callback(error);
             }
-            if(result == null) {
+            else if(result == null) {
               var user = new users({
                 name : null,
                 email : req.body.email,
@@ -249,7 +249,7 @@ module.exports = {
           var error = {status : "Error with database"};
           callback(error);
         }
-        if(result == null) {
+        else if(result == null) {
           var error = {status : "The user doesn't exists"};
           callback(error);
         }
@@ -292,7 +292,8 @@ module.exports = {
                     if (error) {
                       var error = {status : "Error when sending mail"};
                       callback(error);
-                    } else {
+                    }
+                    else {
                       var status = {status : "Email sent"};
                       callback(status);
                     }

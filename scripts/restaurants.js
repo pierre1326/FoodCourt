@@ -317,7 +317,7 @@ module.exports = {
       var status = {status : "Token and emails is necessary"};
       callback(status);
     }
-    if(req.body.filters == undefined || !util.checkFilters(req.body.filters)) {
+    else if(req.body.filters == undefined || !util.checkFilters(req.body.filters)) {
       var status = {status : "Error with filters"};
       callback(status);
     }
