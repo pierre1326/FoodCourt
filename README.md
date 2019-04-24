@@ -4,8 +4,6 @@ En este documento se explicara como hacer uso del backend realizado para la apli
 
 La ruta utilizada es la siguiente: [https://foodcourtec.herokuapp.com/](https://foodcourtec.herokuapp.com/)  
 
-Para ningun caso se recibira token de regreso y se debe avisar puesto que el servidor podria estar caido.
-
 ## Usuarios  
 
 - Registro de Usuario: "/createUser"
